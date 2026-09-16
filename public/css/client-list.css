@@ -1,0 +1,172 @@
+/* =========================
+   案主列表
+========================= */
+
+.client-list-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+}
+
+
+/* =========================
+   頁面上方
+========================= */
+
+.client-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.client-header h1 {
+    margin: 0;
+}
+
+
+/* =========================
+   歡迎訊息
+========================= */
+
+.welcome-message {
+    margin-bottom: 20px;
+}
+
+
+/* =========================
+   搜尋區域
+========================= */
+
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.search-box input {
+    width: 200px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.search-btn {
+    background-color: #4a90e2;
+    color: white;
+}
+
+.search-btn:hover {
+    background-color: #357abd;
+}
+
+
+/* =========================
+   新增按鈕
+========================= */
+
+.add-btn {
+    background-color: #28a745;
+    color: white;
+}
+
+.add-btn:hover {
+    background-color: #218838;
+}
+
+
+/* =========================
+   登出按鈕
+========================= */
+
+.logout-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.logout-btn:hover {
+    background-color: #c82333;
+}
+
+
+/* =========================
+   案主列表
+========================= */
+
+.client-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================
+   表頭
+========================= */
+
+.client-table thead {
+    background-color: #4a90e2;
+    color: white;
+}
+
+.client-table th {
+    padding: 14px 12px;
+    text-align: left;
+    font-weight: bold;
+}
+
+
+/* =========================
+   表格內容
+========================= */
+.client-table td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+/* 滑鼠移到某一列時 */
+.client-table tbody tr:hover {
+    background-color: #f5f8ff;
+}
+
+/* 最後一列不要底線 */
+.client-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* =========================
+   操作欄位
+========================= */
+
+.client-actions {
+    white-space: nowrap;
+}
+
+
+/* =========================
+   操作按鈕
+========================= */
+
+.edit-btn {
+    background-color: #ffc107;
+    color: #333;
+}
+
+.edit-btn:hover {
+    background-color: #e0a800;
+}
+
+.delete-btn {
+    margin-left: 5px;
+    background-color: #dc3545;
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+}

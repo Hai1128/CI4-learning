@@ -1,0 +1,55 @@
+/* =========================
+   新增 / 修改案主
+========================= */
+
+.client-form-container {
+    width: 500px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================
+   標題
+========================= */
+
+.client-form-title {
+    margin-bottom: 25px;
+}
+
+
+/* =========================
+   Select
+========================= */
+
+.form-group select {
+    appearance: auto;
+}
+
+
+/* =========================
+   表單按鈕
+========================= */
+
+.submit-btn {
+    background-color: #4a90e2;
+    color: white;
+}
+
+.submit-btn:hover {
+    background-color: #357abd;
+}
+
+
+.cancel-btn {
+    margin-left: 8px;
+    background-color: #6c757d;
+    color: white;
+}
+
+.cancel-btn:hover {
+    background-color: #5a6268;
+}
