@@ -12,7 +12,8 @@
 
         <h1 class="client-form-title">新增案主</h1>
 
-        <form  method="post" action="<?= base_url('clients/store') ?>">
+        <form  method="post" action="<?= base_url('clients/store') ?>"
+            enctype="multipart/form-data">
 
             <div class="form-group">
                 <label for="ct_name">姓名：</label>
@@ -35,6 +36,18 @@
                     <option value="1">午餐</option>
                     <option value="2">晚餐</option>
                 </select>
+            </div>
+
+            <div class="form-group">
+                <label for="photo">案主照片：</label>
+                <input type="file" id="photo" name="photo" 
+                    accept="image/jpeg,image/png,image/gif,image/webp">
+            </div>
+
+            <div class="form-group">
+                <label for="file">相關文件：</label>
+                <input type="file" id="file" name="file"
+                    accept=".pdf,.doc,.docx">
             </div>
 
             <button type="submit" class="btn submit-btn">新增</button>

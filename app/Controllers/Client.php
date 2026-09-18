@@ -63,13 +63,46 @@
         {
             $clientModel = new ClientModel();
 
+            //取得上傳的照片
+            $photo = $this->request->getFile('photo'); //對應name="photo"
+
+            //取得上傳的文件
+            $file = $this->request->getFile('file'); //對應name="file"
+
             $data = [
                 'ct_name' => $this->request->getPost('ct_name'),
                 'ct_addr' => $this->request->getPost('ct_addr'),
                 'route_no' => $this->request->getPost('route_no'),
                 'meal_type' => $this->request->getPost('meal_type'),
-                'b_date' => date('Y-m-d H:i:s')
+                'b_date' => date('Y-m-d H:i:s'),
             ];
+
+            //處理照片
+            //(有無收到檔案>檔案是否有效>是否沒被移動)
+            if ($photo && $photo->isValid() && !$photo->hasMoved()) { 
+                
+                $photoName = $photo->getRandomName(); // 產生隨機檔名>避免不同使用者上傳同名檔案
+
+                $photo->move(
+                    WRITEPATH . 'uploads/clients', //把照片移到uploads；WRITEPATH>C:\Users\User\xampp\htdocs\my-project\writable\
+                    $photoName
+                ); //放在writeable不是pubic，如果在後者，使用者可以直接透過網址存取檔案
+
+                $data['photo'] = $photoName; //最後把檔名存進資料庫
+            }
+
+            //處理文件
+            if ($file && $file->isValid() && !$file->hasMoved()) {
+
+                $fileName = $file->getRandomName();
+
+                $file->move(
+                    WRITEPATH . 'uploads/clients',
+                    $fileName
+                );
+
+                $data['file'] = $fileName;
+            }
 
             $clientModel->insert($data);
 
