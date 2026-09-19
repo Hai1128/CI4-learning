@@ -12,6 +12,21 @@
 
         <h1 class="client-form-title">新增案主</h1>
 
+        <?php if (session()->get('errors')): ?>
+            <div class="error-message">
+                <?php foreach (session()->get('error') as $error): ?>
+                    <p>
+                        <?= htmlspecialchars(
+                            $error,
+                            ENT_QUOTES,
+                            'UTF-8'
+                        ) ?>
+                    </p>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+
+
         <form  method="post" action="<?= base_url('clients/store') ?>"
             enctype="multipart/form-data">
 
@@ -41,7 +56,7 @@
             <div class="form-group">
                 <label for="photo">案主照片：</label>
                 <input type="file" id="photo" name="photo" 
-                    accept="image/jpeg,image/png,image/gif,image/webp">
+                    accept=".jpeg,.png,.jpg,.webp">
             </div>
 
             <div class="form-group">
