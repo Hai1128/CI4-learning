@@ -228,6 +228,106 @@
 
             return redirect()->to('/clients');
         }
-    }
 
+        //詳細資料
+        public function detail($id) 
+        {
+            $clientModel = new ClientModel();
+
+            $client = $clientModel->find($id);
+
+            //找不到案主
+            if (!$client) {
+                return redirect()->to('/clients');
+            }
+
+            $data = [
+                'client' => $client
+            ];
+
+            return view('client/detail', $data);
+        }
+
+        public function photo($id)
+        {
+            $clientModel = new ClientModel();
+
+            $client = $clientModel->find($id);
+
+            if (!$client || empty($client['photo'])) {
+                return $this->response->setStatusCode(404);
+            }
+
+            $filePath = WRITEPATH
+                . 'uploads/clients'
+                . $client['photo'];
+
+            if (!is_file($filePath)) {
+                return $this->response->setStatusCode(404);
+            }
+
+            $mimeType = mime_content_type($filePath);
+
+            return $this->response
+                ->setHeader('Content-Type', $mimeType)
+                ->setBody(file_get_contents($filePath));
+        }
+
+        public function file($id)
+        {
+            $clientModel = new ClientModel();
+
+            $client = $clientModel->find($id);
+
+            if (!$client || empty($client['file'])) {
+                return $this->response->setStatusCode(404);
+            }
+
+            $filePath = WRITEPATH
+                . 'uploads/clients/'
+                . $client['file'];
+
+            if (!is_file($filePath)) {
+                return $this->response->setStatusCode(404);
+            }
+
+            return $this->response->download(
+                $filePath,
+                null
+            );
+        }
+
+        public function filePreview($id)
+        {
+            $clientModel =new ClientModel();
+
+            $client = $clientModel->find($id);
+
+            if (!$client || empty($client['file'])) {
+                return $this->response->setStatusCode(404);
+            }
+
+            $filePath = WRITEPATH
+                . 'uploads/clients/'
+                . $client['file'];
+            
+            if (!is_file($filePath)) {
+                return $this->response->setStatusCode(404);
+            }
+
+            $extension = strtolower(
+                pathinfo($client['file'], PATHINFO_EXTENSION)
+            );
+
+            if ($extension !== 'pdf') {
+                return $this->response->setStatusCode(400);
+            }
+
+            return $this->response
+                ->setHeader('Client-Type', 'application/pdf')
+                ->setHeader('Content-Disposition', 'inline')
+                ->setBody(file_get_contents($filePath));
+        }
+
+    }
 ?>

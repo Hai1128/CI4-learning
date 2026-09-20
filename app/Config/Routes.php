@@ -23,3 +23,13 @@ $routes->post('/login/check', 'Auth::check');
 $routes->get('/logout', 'Auth::logout');
 
 $routes->get('/', 'Auth::login');
+
+$routes->get('/clients/detail/(:num)', 'Client::detail/$1', ['filter' => 'auth']);
+
+$routes->get('/clients/photo/(:num)', 'Client::photo/$1', ['filter' => 'auth']);
+
+$routes->get('/clients/file/(:num)', 'Client::file/$1', ['filter' => 'auth']);
+
+$routes->get(
+    '/clients/file-preview/(:num)','Client::filePreview/$1',['filter' => 'auth']
+);

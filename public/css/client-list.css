@@ -170,3 +170,12 @@
 .delete-btn:hover {
     background-color: #c82333;
 }
+
+.detail-btn {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.detail-btn:hover {
+    background-color: #138496;
+}

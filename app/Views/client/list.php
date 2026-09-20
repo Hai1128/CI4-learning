@@ -56,6 +56,7 @@
                     <th>地址</th>
                     <th>路線</th>
                     <th>餐別</th>
+                    <th>更多</th>
                     <th>操作</th>
                 </tr>
             </thead>
@@ -97,6 +98,11 @@
                             <?php else: ?>
                                 晚餐
                             <?php endif; ?>
+                        </td>
+                        <td>
+                            <a href="<?= base_url('/clients/detail/' . $client['s_num']) ?>" class="btn detail-btn">
+                                詳細資訊
+                            </a>
                         </td>
                         <td class="client-actions">
                             <a href="<?= base_url('clients/edit/' . $client['s_num']) ?>" class="btn edit-btn">
