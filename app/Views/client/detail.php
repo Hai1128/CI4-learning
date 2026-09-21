@@ -9,12 +9,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>案主詳細資訊</title>
 
-    <link rel="stylesheet" href="<?= base_url('css/common.csss') ?>">
+    <link rel="stylesheet" href="<?= base_url('css/common.css') ?>">
     <link rel="stylesheet" href="<?= base_url('css/client-detail.css') ?>">
 </head>
 <body>
 
-    <div class="detail-container">
+    <div class="client-detail-container">
         <div class="client-detail-header">
             <h1>案主詳細資訊</h1>
 
@@ -106,7 +106,7 @@
             <h2>案主照片</h2>
 
             <?php if (!empty($client['photo'])): ?>
-                <img src="<?= base_url('clients/photo' . $client['s_num']) ?>" 
+                <img src="<?= base_url('clients/photo/' . $client['s_num']) ?>" 
                     alt="案主照片" class="client-photo">
             <?php else: ?>
                 <p>尚未上傳照片</p>
@@ -127,7 +127,7 @@
                     ) ?>
                 </p>
 
-                <a href="<?= base_url('clients/file' . $client['s_num']) ?>"
+                <a href="<?= base_url('clients/file/' . $client['s_num']) ?>"
                     class="btn download-btn">
                     下載文件
                 </a>
@@ -141,7 +141,7 @@
                 <?php if ($extension === 'pdf'): ?>
                     <h3>PDF 預覽</h3>
 
-                    <iframe src="<?= 'clients/file-preview' . $client['s_num'] ?>"
+                    <iframe src="<?= base_url('clients/file-preview/' . $client['s_num']) ?>"
                         class="file-preview">
                     </iframe>
                 <?php endif; ?>

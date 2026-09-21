@@ -259,7 +259,7 @@
             }
 
             $filePath = WRITEPATH
-                . 'uploads/clients'
+                . 'uploads/clients/'
                 . $client['photo'];
 
             if (!is_file($filePath)) {
@@ -324,8 +324,8 @@
             }
 
             return $this->response
-                ->setHeader('Client-Type', 'application/pdf')
-                ->setHeader('Content-Disposition', 'inline')
+                ->setHeader('Content-Type', 'application/pdf')
+                ->setHeader('Content-Disposition', 'inline') //不要強制下載，從瀏覽器直接顯示
                 ->setBody(file_get_contents($filePath));
         }
 

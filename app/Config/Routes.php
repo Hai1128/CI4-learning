@@ -31,5 +31,5 @@ $routes->get('/clients/photo/(:num)', 'Client::photo/$1', ['filter' => 'auth']);
 $routes->get('/clients/file/(:num)', 'Client::file/$1', ['filter' => 'auth']);
 
 $routes->get(
-    '/clients/file-preview/(:num)','Client::filePreview/$1',['filter' => 'auth']
+    '/clients/file-preview/(:num)','Client::filePreview/$1', ['filter' => 'auth']
 );

@@ -78,3 +78,12 @@
 .detail-actions {
     margin-top: 25px;
 }
+
+.edit-btn {
+    background-color: #ffc107;
+    color: #333;
+}
+
+.edit-btn:hover {
+    background-color: #e0a800;
+}
