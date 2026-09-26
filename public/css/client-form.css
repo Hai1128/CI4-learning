@@ -53,3 +53,20 @@
 .cancel-btn:hover {
     background-color: #5a6268;
 }
+
+.edit-client-photo {
+    display: block;
+    width: 200px;
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.form-group small {
+    display: block;
+    margin-top: 6px;
+    color: #777;
+}

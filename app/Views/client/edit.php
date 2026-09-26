@@ -17,8 +17,23 @@
 
         <h1 class="client-form-title">修改案主</h1>
 
+        <?php if (session()->get('errors')): ?>
+            <div class="error-message">
+                <?php foreach (session()->get('error') as $error): ?>
+                    <p>
+                        <?= htmlspecialchars(
+                            $error,
+                            ENT_QUOTES,
+                            'UTF-8'
+                        ) ?>
+                    </p>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+
         <form  method="post" 
-            action="<?= base_url('clients/update/' . $client['s_num']) ?>">
+            action="<?= base_url('clients/update/' . $client['s_num']) ?>"
+            enctype="multipart/form-data">
 
             <div class="form-group">
                 <label for="ct_name">姓名：</label>
@@ -48,6 +63,45 @@
                         晚餐
                     </option>
                 </select>
+            </div>
+
+            <div class="form-group">
+                <label>目前照片：</label>
+                <?php if (!empty($client['photo'])): ?>
+                    <img src="<?= base_url('clients/photo/' . $client['s_num']) ?>" 
+                        alt="目前案主照片" class="edit-client-photo">
+                <?php else: ?>
+                    <p>尚未上傳照片</p>
+                <?php endif; ?>
+            </div>
+
+            <div class="form-group">
+                <label for="photo">重新上傳照片：</label>
+                <input type="file" id="photo" name="photo" accept=".jpg,.jpeg,.png,.webp">
+
+                <small>不選擇新照片則保留原照片，最大 5 MB。</small>
+            </div>
+
+            <div class="form-group">
+                <label>目前文件：</label>
+                <?php if (!empty($client['file'])): ?>
+                    <p>
+                        <?= htmlspecialchars(
+                            $client['file'],
+                            ENT_QUOTES,
+                            'UTF-8'
+                        ) ?>
+                    </p>
+                <?php else: ?>
+                    <p>尚未上傳文件</p>
+                <?php endif; ?>
+            </div>
+
+            <div class="form-group">
+                <label for="file">重新上傳文件：</label>
+                <input type="file" id="file" name="file" accept=".pdf,.doc,.docx">
+
+                <small>不選擇新文件則保留原文件，最大 10 MB。</small>
             </div>
 
             <button type="submit" class="btn submit-btn">儲存修改</button>

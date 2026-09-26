@@ -201,12 +201,156 @@
         {
             $clientModel = new ClientModel();
 
+            /*
+            |--------------------------------------------------------------------------
+            | 找出原本的案主
+            |--------------------------------------------------------------------------
+            */
+            $client = $clientModel->find($id);
+
+            if (!$client) {
+                return redirect()->to('/clients');
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | 檔案驗證規則
+            |--------------------------------------------------------------------------
+            */
+            $rules = [
+                'photo' => [
+                    'permit_empty',
+                    'is_image[photo]',
+                    'mime_in[photo,image/jpeg,image/png,image/webp]',
+                    'max_size[photo,5120]'
+                ],
+
+                'file' => [
+                    'permit_empty',
+                    'mime_in[file,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document]',
+                    'max_size[file,10240]'
+                ]
+            ];
+
+            /*
+            |--------------------------------------------------------------------------
+            | 錯誤訊息
+            |--------------------------------------------------------------------------
+            */
+            $message = [
+                'photo' => [
+                    'is_image' => '照片必須是圖片格式',
+                    'mime_in' => '照片只允許JPG、JPEG、PNG、WEBP',
+                    'max_size' => '照片大小不能超過 5 MB'
+                ],
+
+                'file' => [
+                    'mime_in' => '文件只允許PDF、DOC、DOCX',
+                    'max_size' => '文件大小不能超過 10 MB'
+                ]
+            ];
+
+            /*
+            |--------------------------------------------------------------------------
+            | 執行驗證
+            |--------------------------------------------------------------------------
+            */
+            if (!$this->validate($rules, $message)) {
+                return redirect()
+                    ->back()
+                    ->withInput()
+                    ->with('errors', $this->validator->getErrors());
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | 取得新檔案
+            |--------------------------------------------------------------------------
+            */
+            $photo = $this->request->getFile('photo');
+
+            $file = $this->request->getFile('file');
+
+            /*
+            |--------------------------------------------------------------------------
+            | 基本資料
+            |--------------------------------------------------------------------------
+            */
             $data = [
                 'ct_name' => $this->request->getPost('ct_name'),
                 'ct_addr' => $this->request->getPost('ct_addr'),
                 'route_no' => $this->request->getPost('route_no'),
                 'meal_type' => $this->request->getPost('meal_type')
             ]; //取得使用者修改後的資料
+
+            /*
+            |--------------------------------------------------------------------------
+            | 處理新照片
+            |--------------------------------------------------------------------------
+            */
+            if ($photo && $photo->isValid()) {
+                //刪除舊照片
+                if (!empty($client['photo'])) {
+                    $oldPhotoPath = WRITEPATH
+                        . 'uploads/clients/'
+                        .$client['photo'];
+
+                    if (is_file($oldPhotoPath)) {
+                        unlink($oldPhotoPath);
+                    }
+                }
+
+                // 產生新檔名
+                $photoName = $photo->getRandomName();
+
+                //儲存新照片
+                $photo->move(
+                    WRITEPATH . 'uploads/clients',
+                    $photoName 
+                );
+
+                //更新資料庫
+                $data['photo'] = $photoName;
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | 處理新文件
+            |--------------------------------------------------------------------------
+            */
+
+            if ($file && $file->isValid()) {
+
+                // 刪除舊文件
+                if (!empty($client['file'])) {
+
+                    $oldFilePath = WRITEPATH
+                        . 'uploads/clients/'
+                        . $client['file'];
+
+                    if (is_file($oldFilePath)) {
+                        unlink($oldFilePath);
+                    }
+                }
+
+                // 產生新檔名
+                $fileName = $file->getRandomName();
+
+                // 儲存新文件
+                $file->move(
+                    WRITEPATH . 'uploads/clients',
+                    $fileName
+                );
+
+                // 更新資料庫
+                $data['file'] = $fileName;
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | 更新資料庫
+            |--------------------------------------------------------------------------
+            */
 
             //真正執行UPDATE的地方
             $clientModel->update($id, $data);
