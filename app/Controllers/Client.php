@@ -358,6 +358,68 @@
             return redirect()->to('/clients');
         }
 
+        //刪除目前照片
+        public function deletePhoto($id)
+        {
+            $clientModel = new ClientModel();
+
+            $client = $clientModel->find($id);
+
+            if (!$client) {
+                return redirect()->to('/clients');
+            }
+
+            //確認目前有照片
+            if (!empty($client['photo'])) {
+                $photoPath = WRITEPATH
+                    . 'uploads/clients/'
+                    . $client['photo'];
+
+                //刪除實體照片
+                if (is_file($photoPath)) {
+                    unlink($photoPath);
+                }
+
+                //清除資料庫中的照片檔名
+                $clientModel->update($id, [
+                    'photo' => null
+                ]);
+            }
+
+            return redirect()->to('/clients/edit/' . $id);
+        }
+
+        //刪除目前文件
+        public function deleteFile($id)
+        {
+            $clientModel = new ClientModel();
+
+            $client = $clientModel->find($id);
+
+            if (!$client) {
+                return redirect()->to('/clients');
+            }
+
+            //確認目前有文件
+            if (!empty($client['file'])) {
+                $filePath = WRITEPATH
+                    . 'uploads/clients/'
+                    . $client['file'];
+
+                //刪除實體文件
+                if (is_file($filePath)) {
+                    unlink($filePath);
+                }
+
+                // 清除資料庫中的文件檔名件檔名
+                $clientModel->update($id, [
+                    'file' => null
+                ]);
+            }
+
+            return redirect()->to('/clients/edit/' . $id);
+        }
+
         //刪除資料
         public function delete($id)
         {

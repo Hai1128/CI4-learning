@@ -68,10 +68,14 @@
             <div class="form-group">
                 <label>目前照片：</label>
                 <?php if (!empty($client['photo'])): ?>
+
                     <img src="<?= base_url('clients/photo/' . $client['s_num']) ?>" 
                         alt="目前案主照片" class="edit-client-photo">
+
                 <?php else: ?>
+
                     <p>尚未上傳照片</p>
+
                 <?php endif; ?>
             </div>
 
@@ -85,6 +89,7 @@
             <div class="form-group">
                 <label>目前文件：</label>
                 <?php if (!empty($client['file'])): ?>
+
                     <p>
                         <?= htmlspecialchars(
                             $client['file'],
@@ -92,8 +97,11 @@
                             'UTF-8'
                         ) ?>
                     </p>
+
                 <?php else: ?>
+
                     <p>尚未上傳文件</p>
+
                 <?php endif; ?>
             </div>
 
@@ -110,6 +118,27 @@
 
         </form>
 
+        <div class="delete-file-buttons">
+
+            <?php if (!empty($client['photo'])): ?>
+                <form method="post" action="<?= base_url('clients/delete-photo/' . $client['s_num']) ?>"
+                    onsubmit="return confirm('確定要刪除目前照片嗎？');">
+                    <button type="submit" class="btn delete-file-btn">
+                        刪除目前照片
+                    </button>
+                </form>
+            <?php endif; ?>
+
+            <?php if (!empty($client['file'])): ?>
+                <form method="post" action="<?= base_url('clients/delete-file/' . $client['s_num']) ?>"
+                    onsubmit="return confirm('確定要刪除目前文件嗎？')">
+                    <button type="submit" class="btn delete-file-btn">
+                        刪除目前文件
+                    </button>
+                </form>
+            <?php endif; ?>
+        </div>
+        
     </div>
 
 </body>
