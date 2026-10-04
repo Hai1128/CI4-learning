@@ -13,7 +13,7 @@
         protected $allowedFields = [
             'username',
             'password',
-            'nickname'
+            'role'
         ];
     }
 
