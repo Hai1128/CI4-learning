@@ -1,0 +1,35 @@
+/* =========================
+   註冊頁
+========================= */
+.register-container {
+    width: 400px;
+    margin: 100px auto;
+    padding: 30px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* =========================
+   註冊標題
+========================= */
+
+.register-title {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+/* =========================
+   註冊/返回按鈕
+========================= */
+
+.register-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #4a90e2;
+    color: white;
+}
+
+.register-btn:hover {
+    background-color: #357abd;
+}

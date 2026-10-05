@@ -34,6 +34,16 @@
             <button type="submit" class="btn login-btn">登入</button>
         </form>
 
+        <div class="register-btns">
+            <a href="<?= base_url('register') ?>" class="register-btn">
+                一般人員註冊
+            </a>
+
+            <a href="<?= base_url('register/admin') ?>" class="register-btn">
+                管理員註冊
+            </a>
+        </div>
+
     </div>
 
 </body>

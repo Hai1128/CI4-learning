@@ -34,3 +34,32 @@
 .login-btn:hover {
     background-color: #357abd;
 }
+
+/* =========================
+   註冊按鈕
+========================= */
+
+.register-btns {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.register-btn {
+    flex: 1;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    text-decoration: none;
+    text-align: center;
+    background-color: #4a90e2;
+    color: white;
+    border-radius: 6px;
+}
+
+.register-btn:hover {
+    background-color: #357abd;
+}
