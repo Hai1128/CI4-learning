@@ -98,3 +98,8 @@ $routes->get('/admin-invites/create', 'AdminInvite::create',
 $routes->post('/admin-invites/generate', 'AdminInvite::generate', 
     ['filter' => ['auth', 'role:super_admin']]);
 
+/* =========================
+   使用者管理介面
+========================= */
+$routes->get('/users', 'User::index',
+    ['filter' => ['auth', 'role:super_admin']]);

@@ -39,11 +39,17 @@ $userRole = session()->get('role');
                 歡迎 <?= htmlspecialchars(session()->get('role'), ENT_QUOTES, 'UTF-8') ?>
             </p>
 
-            <?php if ($userRole === 'super_admin'): ?>
-                <a href="<?= base_url('admin-invites/create') ?>" class="btn add-btn">
-                    管理員邀請碼
-                </a>
-            <?php endif; ?>
+            <div>
+                <?php if ($userRole === 'super_admin'): ?>
+                    <a href="<?= base_url('admin-invites/create') ?>" class="btn add-btn">
+                        管理員邀請碼
+                    </a>
+                    <a href="<?= base_url('users') ?>" class="btn userlist-btn">
+                        人員管理
+                    </a>
+                <?php endif; ?>
+            </div>
+            
         </div>
         
         
