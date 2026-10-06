@@ -16,6 +16,13 @@
    標題
 ========================= */
 
+.client-form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
 .client-form-title {
     margin-bottom: 25px;
 }

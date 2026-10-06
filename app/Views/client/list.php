@@ -1,5 +1,7 @@
 <?php
 /** @var array $clients */
+
+$userRole = session()->get('role');
 ?>
 <!DOCTYPE html>
 <html lang="zh-TW">
@@ -20,7 +22,10 @@
             <h1>案主列表</h1>
 
             <div>
-                <a href="<?= base_url('clients/add') ?>" class="btn add-btn">新增案主</a>
+                <?php if ($userRole === 'admin' || $userRole === 'super_admin'): ?>
+                    <a href="<?= base_url('clients/add') ?>" class="btn add-btn">新增案主</a>
+                <?php endif; ?>
+
                 <a href="<?= base_url('logout') ?>" class="btn logout-btn">登出</a>
             </div>
 
@@ -28,10 +33,20 @@
         
         <hr>
 
-        <!-- 歡迎訊息 -->
-        <p class="welcome-message">
-            歡迎 <?= htmlspecialchars(session()->get('nickname'), ENT_QUOTES, 'UTF-8') ?>
-        </p>
+        <div class="client-header">
+            <!-- 歡迎訊息 -->
+            <p class="welcome-message">
+                歡迎 <?= htmlspecialchars(session()->get('role'), ENT_QUOTES, 'UTF-8') ?>
+            </p>
+
+            <?php if ($userRole === 'super_admin'): ?>
+                <a href="<?= base_url('admin-invites/create') ?>" class="btn add-btn">
+                    管理員邀請碼
+                </a>
+            <?php endif; ?>
+        </div>
+        
+        
 
         <!-- 搜尋 -->
         <form method="get" action="<?= base_url('clients') ?>" class="search-box">
@@ -57,7 +72,11 @@
                     <th>路線</th>
                     <th>餐別</th>
                     <th>更多</th>
-                    <th>操作</th>
+                    <?php if ($userRole === 'admin' || $userRole === 'super_admin'): ?>
+                        <th>操作</th>
+                    <?php else:?>
+                        <th> </th>
+                    <?php endif; ?>
                 </tr>
             </thead>
 
@@ -105,12 +124,14 @@
                             </a>
                         </td>
                         <td class="client-actions">
-                            <a href="<?= base_url('clients/edit/' . $client['s_num']) ?>" class="btn edit-btn">
-                                修改
-                            </a>
-                            <a href="<?= base_url('clients/delete/' . $client['s_num']) ?>" class="btn delete-btn">
-                                刪除
-                            </a>
+                            <?php if ($userRole === 'admin' || $userRole === 'super_admin'): ?>
+                                <a href="<?= base_url('clients/edit/' . $client['s_num']) ?>" class="btn edit-btn">
+                                    修改
+                                </a>
+                                <a href="<?= base_url('clients/delete/' . $client['s_num']) ?>" class="btn delete-btn">
+                                    刪除
+                                </a>
+                            <?php endif; ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>

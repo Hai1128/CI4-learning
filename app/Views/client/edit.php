@@ -15,7 +15,12 @@
     
     <div class="client-form-container">
 
-        <h1 class="client-form-title">修改案主</h1>
+        <div class="client-form-header">
+            <h1 class="client-form-title">修改案主</h1>
+
+            <a href="<?= base_url('clients') ?>" class="btn cancel-btn">取消</a>
+        </div>
+        
 
         <?php if (session()->get('errors')): ?>
             <div class="error-message">
