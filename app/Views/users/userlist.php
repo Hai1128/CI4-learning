@@ -8,73 +8,83 @@
 <head>
     <meta charset="UTF-8">
     <title>人員管理</title>
+
+    <link rel="stylesheet" href="<?= base_url('css/common.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('css/user-list.css') ?>">
 </head>
 
 <body>
 
-    <h1>人員管理</h1>
+    <div class="user-list-container">
+        <div class="user-header">
+            <h1>人員管理</h1>
 
-    <a href="<?= base_url('clients') ?>">
-        返回案主列表
-    </a>
+            <a href="<?= base_url('clients') ?>" class="btn back-btn">
+                返回案主列表
+            </a>
+        </div>
 
-    <table border="1">
+        <hr>
+        
+        <table class="user-table">
 
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>帳號</th>
-                <th>身分</th>
-            </tr>
-        </thead>
-
-        <tbody>
-
-            <?php foreach ($users as $user): ?>
-
+            <thead>
                 <tr>
-
-                    <td>
-                        <?= htmlspecialchars(
-                            $user['id'],
-                            ENT_QUOTES,
-                            'UTF-8'
-                        ) ?>
-                    </td>
-
-                    <td>
-                        <?= htmlspecialchars(
-                            $user['username'],
-                            ENT_QUOTES,
-                            'UTF-8'
-                        ) ?>
-                    </td>
-
-                    <td>
-
-                        <?php if ($user['role'] === 'super_admin'): ?>
-
-                            最高管理員
-
-                        <?php elseif ($user['role'] === 'admin'): ?>
-
-                            管理員
-
-                        <?php else: ?>
-
-                            一般人員
-
-                        <?php endif; ?>
-
-                    </td>
-
+                    <th>ID</th>
+                    <th>帳號</th>
+                    <th>身分</th>
                 </tr>
+            </thead>
 
-            <?php endforeach; ?>
+            <tbody>
 
-        </tbody>
+                <?php foreach ($users as $user): ?>
 
-    </table>
+                    <tr>
+
+                        <td>
+                            <?= htmlspecialchars(
+                                $user['id'],
+                                ENT_QUOTES,
+                                'UTF-8'
+                            ) ?>
+                        </td>
+
+                        <td>
+                            <?= htmlspecialchars(
+                                $user['username'],
+                                ENT_QUOTES,
+                                'UTF-8'
+                            ) ?>
+                        </td>
+
+                        <td>
+
+                            <?php if ($user['role'] === 'super_admin'): ?>
+
+                                最高管理員
+
+                            <?php elseif ($user['role'] === 'admin'): ?>
+
+                                管理員
+
+                            <?php else: ?>
+
+                                一般人員
+
+                            <?php endif; ?>
+
+                        </td>
+
+                    </tr>
+
+                <?php endforeach; ?>
+
+            </tbody>
+
+        </table>
+    </div>
+    
 
 </body>
 
