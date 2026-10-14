@@ -7,6 +7,7 @@
         而它的namespace是App\Models;
         所以Controller要先告訴PHP：我要使用ClientModel
     */
+    use App\Libraries\SmartyRenderer;
 
     class Client extends BaseController
     {
@@ -46,10 +47,17 @@
 
             //傳給View
             $data = [
-                'clients' => $clients
+                'clients' => $clients,
+                'routeNo' => $routeNo,
+                'userRole' => session()->get('role'),
+                'username' => session()->get('username'),
+                'baseUrl' =>rtrim(base_url(), '/')
             ];
 
-            return view('client/list', $data);
+            //使用Smarty顯示案主列表
+            $smarty = new SmartyRenderer;
+
+            return $smarty->render('list.tpl', $data);
         }
 
         //顯示新增頁面
