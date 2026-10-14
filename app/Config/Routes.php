@@ -103,3 +103,9 @@ $routes->post('/admin-invites/generate', 'AdminInvite::generate',
 ========================= */
 $routes->get('/users', 'User::index',
     ['filter' => ['auth', 'role:super_admin']]);
+
+/* =========================
+    smarty測試
+========================= */
+$routes->get('/smarty-test', 'SmartyTest::index', 
+    ['filter' => ['auth']]);
