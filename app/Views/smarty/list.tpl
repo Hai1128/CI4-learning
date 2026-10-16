@@ -39,40 +39,40 @@
                 </div>
             </div>
         </div>
-            <div class="sidebar-section-title">主要功能</div>
+        <div class="sidebar-section-title">主要功能</div>
 
-            <nav class="sidebar-nav">
-                <a href="{$baseUrl}/clients" class="nav-link active">
-                    <span class="nav-icon">▦</span>
-                    <span>案主列表</span>
+        <nav class="sidebar-nav">
+            <a href="{$baseUrl}/clients" class="nav-link active">
+                <span class="nav-icon">▦</span>
+                <span>案主列表</span>
+            </a>
+
+            {* admin 和 super_admin 才能新增案主 *}
+            {if $userRole == 'admin' || $userRole == 'super_admin'}
+                <a href="{$baseUrl}/clients/add" class="nav-link">
+                    <span class="nav-icon">＋</span>
+                    <span>新增案主</span>
+                </a>
+            {/if}
+
+            {* 只有 super_admin 能管理人員及邀請碼 *}
+            {if $userRole == 'super_admin'}
+                <a href="{$baseUrl}/admin-invites/create" class="nav-link">
+                    <span class="nav-icon">✉</span>
+                    <span>管理員邀請碼</span>
                 </a>
 
-                {* admin 和 super_admin 才能新增案主 *}
-                {if $userRole == 'admin' || $userRole == 'super_admin'}
-                    <a href="{$baseUrl}/clients/add" class="nav-link">
-                        <span class="nav-icon">＋</span>
-                        <span>新增案主</span>
-                    </a>
-                {/if}
+                <a href="{$baseUrl}/users" class="nav-link">
+                    <span class="nav-icon">♙</span>
+                    <span>人員管理</span>
+                </a>
+            {/if}
+        </nav>
 
-                {* 只有 super_admin 能管理人員及邀請碼 *}
-                {if $userRole == 'super_admin'}
-                    <a href="{$baseUrl}/admin-invites/create" class="nav-link">
-                        <span class="nav-icon">✉</span>
-                        <span>管理員邀請碼</span>
-                    </a>
-
-                    <a href="{$baseUrl}/users" class="nav-link">
-                        <span class="nav-icon">♙</span>
-                        <span>人員管理</span>
-                    </a>
-                {/if}
-            </nav>
-
-            <div class="sidebar-footer">
-                <span class="status-dot"></span>
-                <span>系統正常運作</span>
-            </div>
+        <div class="sidebar-footer">
+            <span class="status-dot"></span>
+            <span>系統正常運作</span>
+        </div>
     </aside>
 
     {* 右側主要內容 *}

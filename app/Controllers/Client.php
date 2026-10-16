@@ -63,7 +63,21 @@
         //顯示新增頁面
         public function add()
         {
-            return view('client/add');
+            $data = [
+                'baseUrl' => rtrim(base_url(), '/'),
+                'userRole' => session()->get('role'),
+                'username' => session()->get('username'),
+
+                //驗證失敗時，顯示錯誤訊息
+                'errors' => session()->getFlashdata('errors') ?? [],
+
+                //驗證失敗時，保留先前的輸入文字
+                'oldInput' => session()->getFlashdata('_ci_old_input')['data'] ?? [],
+            ];
+
+            $smarty = new SmartyRenderer();
+
+            return $smarty->render('add.tpl', $data);
         }
 
         //儲存新增資料
@@ -195,13 +209,55 @@
         {
             $clientModel = new ClientModel();
 
+            // 查詢目前要修改的案主
             $client = $clientModel->find($id);
 
+            // 如果找不到案主，就返回案主列表
+            if (!$client) {
+                return redirect()->to('/clients');
+            }
+
             $data = [
-                'client' => $client
+                'client' => $client,
+
+                // Smarty 頁面共用資料
+                'baseUrl' => rtrim(base_url(), '/'),
+                'userRole' => session()->get('role'),
+                'username' => session()->get('username'),
+
+                // 顯示驗證錯誤
+                'errors' => session()->getFlashdata('errors') ?? [],
+
+                // 驗證失敗返回頁面時，保留先前輸入的文字
+                // 第三個參數 false：先不由 old() 進行 HTML 轉義，
+                // 交給 Smarty 模板的 |escape 處理。
+                'formData' => [
+                    'ct_name' => old(
+                        'ct_name',
+                        $client['ct_name'],
+                        false
+                    ),
+                    'ct_addr' => old(
+                        'ct_addr',
+                        $client['ct_addr'],
+                        false
+                    ),
+                    'route_no' => old(
+                        'route_no',
+                        $client['route_no'],
+                        false
+                    ),
+                    'meal_type' => old(
+                        'meal_type',
+                        $client['meal_type'],
+                        false
+                    ),
+                ],
             ];
 
-            return view('client/edit', $data);
+            $smarty = new \App\Libraries\SmartyRenderer();
+
+            return $smarty->render('edit.tpl', $data);
         }
 
         //儲存修改資料
@@ -448,18 +504,35 @@
         {
             $clientModel = new ClientModel();
 
+            // 查詢案主資料
             $client = $clientModel->find($id);
 
-            //找不到案主
+            // 找不到案主，就返回案主列表
             if (!$client) {
                 return redirect()->to('/clients');
             }
 
+            // 判斷文件副檔名
+            $fileExtension = '';
+
+            if (!empty($client['file'])) {
+                $fileExtension = strtolower(
+                    pathinfo($client['file'], PATHINFO_EXTENSION)
+                );
+            }
+
+            // 傳遞資料給 Smarty
             $data = [
-                'client' => $client
+                'client' => $client,
+                'baseUrl' => rtrim(base_url(), '/'),
+                'userRole' => session()->get('role'),
+                'username' => session()->get('username'),
+                'fileExtension' => $fileExtension,
             ];
 
-            return view('client/detail', $data);
+            $smarty = new \App\Libraries\SmartyRenderer();
+
+            return $smarty->render('detail.tpl', $data);
         }
 
         public function photo($id)
