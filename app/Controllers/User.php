@@ -2,6 +2,7 @@
 namespace App\Controllers;
 
 use App\Models\UserModel;
+use App\Libraries\SmartyRenderer;
 
 class User extends BaseController
 {
@@ -9,12 +10,27 @@ class User extends BaseController
     {
         $userModel = new UserModel();
 
+        $roleNo = $this->request->getGet('roleNo') ?? '';
+
+        if ($roleNo !== null && $roleNo !== '') {
+            $userModel->where('role', $roleNo);
+        }
+
         $users = $userModel
             ->select('id, username, role')
+            ->orderBy('id', 'ASC')
             ->findAll();
 
-        return view('users/userlist', [
-            'users' => $users
-        ]);
+        $data = [
+            'users' => $users,
+            'roleNo' => $roleNo,
+            'userRole' => session()->get('role'),
+            'username' => session()->get('username'),
+            'baseUrl' => rtrim(base_url(). '/')
+        ];
+
+        $smarty = new SmartyRenderer;
+
+        return $smarty->render('userlist.tpl', $data);
     }
 }

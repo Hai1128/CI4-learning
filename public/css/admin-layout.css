@@ -311,7 +311,7 @@
     font-weight: 600;
 }
 
-.filter-field input {
+.filter-field input,select {
     width: 100%;
     box-sizing: border-box;
     padding: 11px 12px;
