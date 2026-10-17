@@ -2,15 +2,25 @@
 
     namespace App\Controllers;
 
-    use App\Models\AdminInviteModel;
+use App\Libraries\SmartyRenderer;
+use App\Models\AdminInviteModel;
 
     class AdminInvite extends BaseController
     {
         public function create()
         {
-            $inviteModel = new AdminInviteModel();
+            $data = [
+                'baseUrl' => rtrim(base_url(), '/'),
+                'userRole' => session()->get('role'),
+                'username' => session()->get('username'),
 
-            return view('admin_invites/create');
+                'invite_code' => session()->getFlashdata('invite_code'),
+                'expires_at' => session()->getFlashdata('expires_at'),
+            ];
+
+            $smarty = new SmartyRenderer;
+
+            return $smarty->render('create.tpl', $data);
         }
 
         public function generate()
