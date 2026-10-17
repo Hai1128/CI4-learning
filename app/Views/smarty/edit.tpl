@@ -1,4 +1,3 @@
-```smarty
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -120,13 +119,6 @@
 
         <!-- 頁面內容 -->
         <main class="content-area">
-
-            <div class="page-intro">
-                <div>
-                    <h2>修改案主資料</h2>
-                    <p>修改完成後，請按「儲存修改」保存資料。</p>
-                </div>
-            </div>
 
             <div class="client-form-container">
 

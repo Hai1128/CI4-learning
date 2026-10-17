@@ -119,13 +119,7 @@
         </header>
 
         <section class="content-area">
-            <div class="page-intro">
-                <div>
-                    <h2>人員帳密</h2>
-                    <p>檢視人員帳號、密碼、身分</p>
-                </div>
-            </div>
-
+            
             {* 身分篩選 *}
             <section class="filter-card">
                 <form action="{$baseUrl}/users" method="get" class="filter-form">

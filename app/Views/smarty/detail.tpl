@@ -121,7 +121,7 @@
             <div class="client-detail-container">
 
                 <div class="client-detail-header">
-                    <h1>案主詳細資訊</h1>
+                    <h1>基本資料</h1>
                     <a href="{$baseUrl}/clients" class="btn back-btn">
                         返回列表
                     </a>
@@ -129,7 +129,6 @@
 
                 {* 案主基本資料 *}
                 <section class="detail-section">
-                    <h2>基本資料</h2>
 
                     <div class="detail-row">
                         <span class="detail-label">編號：</span>

@@ -123,13 +123,6 @@
         {* 頁面內容 *}
         <section class="content-area">
 
-            <div class="page-intro">
-                <div>
-                    <h2>案主資料</h2>
-                    <p>檢視案主名單、路線及相關資訊。</p>
-                </div>
-            </div>
-
             {* 路線篩選 *}
             <section class="filter-card">
                 <form action="{$baseUrl}/clients" method="get" class="filter-form">

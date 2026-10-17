@@ -120,13 +120,6 @@
         <!-- 頁面內容 -->
         <main class="content-area">
 
-            <div class="page-intro">
-                <div>
-                    <h2>新增案主資料</h2>
-                    <p>請填寫案主基本資料，並視需要上傳照片及相關文件。</p>
-                </div>
-            </div>
-            
             <div class="client-form-container">
 
                 <div class="client-form-header">
