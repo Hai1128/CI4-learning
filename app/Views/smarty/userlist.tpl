@@ -56,14 +56,14 @@
 
             {* 只有 super_admin 能管理人員及邀請碼 *}
             {if $userRole == 'super_admin'}
+                <a href="{$baseUrl}/users" class="nav-link">
+                    <span class="nav-icon">♙</span>
+                    <span>人員管理</span>
+                </a>
+
                 <a href="{$baseUrl}/admin-invites/create" class="nav-link">
                     <span class="nav-icon">✉</span>
                     <span>管理員邀請碼</span>
-                </a>
-
-                <a href="{$baseUrl}/users" class="nav-link active">
-                    <span class="nav-icon">♙</span>
-                    <span>人員管理</span>
                 </a>
             {/if}
         </nav>
@@ -81,6 +81,25 @@
             <div class="topbar-heading">
                 <h1>人員列表</h1>
                 <p>查看及管理人員帳密</p>
+
+                <nav class="breadcrumb" aria-label="麵包屑導覽">
+                    {foreach $breadcrumbs as $item}
+                        {if !$item@first}
+                            <span class="breadcrumb-separator">/</span>
+                        {/if}
+                        
+                        {if $item@last}
+                            <span class="breadcrumb-current">
+                                {$item.label|escape}
+                            </span>
+                        {else}
+                            <a href="{$baseUrl}{$item.url|escape}"
+                                class="breadcrumb-link">
+                                {$item.label|escape}
+                            </a>
+                        {/if}
+                    {/foreach}
+                </nav>
             </div>
 
             <div class="topbar-user">

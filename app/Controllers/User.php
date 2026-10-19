@@ -26,7 +26,14 @@ class User extends BaseController
             'roleNo' => $roleNo,
             'userRole' => session()->get('role'),
             'username' => session()->get('username'),
-            'baseUrl' => rtrim(base_url(). '/')
+            'baseUrl' => rtrim(base_url(). '/'),
+
+            'breadcrumbs' => [
+                [
+                    'label' => '人員列表',
+                    'url' => '/users',
+                ],
+            ],
         ];
 
         $smarty = new SmartyRenderer;

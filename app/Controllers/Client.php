@@ -51,7 +51,14 @@
                 'routeNo' => $routeNo,
                 'userRole' => session()->get('role'),
                 'username' => session()->get('username'),
-                'baseUrl' =>rtrim(base_url(), '/')
+                'baseUrl' =>rtrim(base_url(), '/'),
+
+                'breadcrumbs' => [
+                    [
+                        'label' => '案主列表',
+                        'url' => '/clients',
+                    ],
+                ],
             ];
 
             //使用Smarty顯示案主列表
@@ -73,6 +80,17 @@
 
                 //驗證失敗時，保留先前的輸入文字
                 'oldInput' => session()->getFlashdata('_ci_old_input')['data'] ?? [],
+                
+                'breadcrumbs' => [
+                    [
+                        'label' => '案主列表',
+                        'url' => '/clients',
+                    ],
+                    [
+                        'label' => '新增案主',
+                        'url' => '/clients/add',
+                    ],
+                ],
             ];
 
             $smarty = new SmartyRenderer();
@@ -252,6 +270,17 @@
                         $client['meal_type'],
                         false
                     ),
+                ],
+
+                'breadcrumbs' => [
+                    [
+                        'label' => '案主列表',
+                        'url' => '/clients',
+                    ],
+                    [
+                        'label' => (string) $client['ct_name'],
+                        'url' => '/clients/edit/' . $client['s_num'],
+                    ],
                 ],
             ];
 
@@ -528,6 +557,17 @@
                 'userRole' => session()->get('role'),
                 'username' => session()->get('username'),
                 'fileExtension' => $fileExtension,
+
+                'breadcrumbs' => [
+                    [
+                        'label' => '案主列表',
+                        'url' => '/clients',
+                    ],
+                    [
+                        'label' => (string) $client['ct_name'],
+                        'url' => '/clients/detail/' . $client['s_num'],
+                    ],
+                ],
             ];
 
             $smarty = new \App\Libraries\SmartyRenderer();

@@ -55,14 +55,14 @@
             {/if}
 
             {if $userRole == 'super_admin'}
-                <a href="{$baseUrl}/admin-invites/create" class="nav-link">
-                    <span class="nav-icon">✉</span>
-                    <span>管理員邀請碼</span>
-                </a>
-
                 <a href="{$baseUrl}/users" class="nav-link">
                     <span class="nav-icon">♙</span>
                     <span>人員管理</span>
+                </a>
+
+                <a href="{$baseUrl}/admin-invites/create" class="nav-link">
+                    <span class="nav-icon">✉</span>
+                    <span>管理員邀請碼</span>
                 </a>
             {/if}
         </nav>
@@ -82,6 +82,25 @@
             <div class="topbar-heading">
                 <h1>新增案主</h1>
                 <p>建立新的案主資料</p>
+
+                <nav class="breadcrumb" aria-label="麵包屑導覽">
+                    {foreach $breadcrumbs as $item}
+                        {if !$item@first}
+                            <span class="breadcrumb-separator">/</span>
+                        {/if}
+                        
+                        {if $item@last}
+                            <span class="breadcrumb-current">
+                                {$item.label|escape}
+                            </span>
+                        {else}
+                            <a href="{$baseUrl}{$item.url|escape}"
+                                class="breadcrumb-link">
+                                {$item.label|escape}
+                            </a>
+                        {/if}
+                    {/foreach}
+                </nav>
             </div>
 
             <div class="topbar-user">

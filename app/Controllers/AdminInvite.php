@@ -16,6 +16,17 @@ use App\Models\AdminInviteModel;
 
                 'invite_code' => session()->getFlashdata('invite_code'),
                 'expires_at' => session()->getFlashdata('expires_at'),
+
+                'breadcrumbs' => [
+                    [
+                        'label' => '人員列表',
+                        'url' => '/users',
+                    ],
+                    [
+                        'label' => '管理員邀請碼',
+                        'url' => '/admin-invites/create',
+                    ],
+                ],
             ];
 
             $smarty = new SmartyRenderer;

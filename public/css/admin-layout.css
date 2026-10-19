@@ -759,3 +759,41 @@
         display: inline;
     }
 }
+
+
+/* 置頂工具欄標題與路徑 */
+.topbar-heading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    min-width: 0;
+}
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+.breadcrumb-link {
+    color: #64748b;
+    text-decoration: none;
+}
+
+.breadcrumb-link:hover {
+    color: #2563eb;
+    text-decoration: underline;
+}
+
+.breadcrumb-separator {
+    color: #94a3b8;
+}
+
+.breadcrumb-current {
+    color: #334155;
+    font-weight: 500;
+}
