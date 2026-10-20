@@ -797,3 +797,48 @@
     color: #334155;
     font-weight: 500;
 }
+
+
+/* 下拉選單容器 */
+.nav-dropdown {
+    width: 100%;
+}
+
+/* 下拉選單標題按鈕 */
+.nav-dropdown-toggle {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+/* 下拉選單箭頭 */
+.nav-arrow {
+    margin-left: auto;
+    transition: transform 0.2s ease;
+}
+
+/* 展開時旋轉箭頭 */
+.nav-dropdown.open .nav-arrow {
+    transform: rotate(180deg);
+}
+
+/* 下拉選單內容：預設收合 */
+.nav-dropdown-menu {
+    display: none;
+    flex-direction: column;
+    padding-left: 12px;
+}
+
+/* 展開時顯示選項 */
+.nav-dropdown.open .nav-dropdown-menu {
+    display: flex;
+}
+
+/* 子選項沿用原本的 nav-link 外觀 */
+.nav-dropdown-menu .nav-link {
+    width: 100%;
+    box-sizing: border-box;
+}

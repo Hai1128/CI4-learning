@@ -42,28 +42,50 @@
         <div class="sidebar-section-title">主要功能</div>
 
         <nav class="sidebar-nav">
-            <a href="{$baseUrl}/clients" class="nav-link active">
-                <span class="nav-icon">▦</span>
-                <span>案主列表</span>
-            </a>
+            <div class="nav-dropdown">
+                <button type="button" class="nav-link nav-dropdown-toggle"
+                        aria-expanded="false" onclick="toggleNavDropdown(this)">
+                    <span class="nav-icon"></span>
+                    <span>案主專區</span>
+                    <span class="nav-arrow">⌄</span>
+                </button>
+                <div class="nav-dropdown-menu">
+                    <a href="{$baseUrl}/clients" class="nav-link active">
+                        <span class="nav-icon">▦</span>
+                        <span>案主列表</span>
+                    </a>
 
-            {if $userRole == 'admin' || $userRole == 'super_admin'}
-                <a href="{$baseUrl}/clients/add" class="nav-link">
-                    <span class="nav-icon">＋</span>
-                    <span>新增案主</span>
-                </a>
-            {/if}
+                    {* admin 和 super_admin 才能新增案主 *}
+                    {if $userRole == 'admin' || $userRole == 'super_admin'}
+                        <a href="{$baseUrl}/clients/add" class="nav-link">
+                            <span class="nav-icon">＋</span>
+                            <span>新增案主</span>
+                        </a>
+                    {/if}
+                </div>
+            </div>
 
+            {* 只有 super_admin 能管理人員及邀請碼 *}
             {if $userRole == 'super_admin'}
-                <a href="{$baseUrl}/users" class="nav-link">
-                    <span class="nav-icon">♙</span>
-                    <span>人員管理</span>
-                </a>
+                <div class="nav-dropdown">
+                    <button type="button" class="nav-link nav-dropdown-toggle"
+                            aria-expanded="false" onclick="toggleNavDropdown(this)">
+                        <span class="nav-icon"></span>
+                        <span>人員專區</span>
+                        <span class="nav-arrow">⌄</span>
+                    </button>
+                    <div class="nav-dropdown-menu">
+                        <a href="{$baseUrl}/users" class="nav-link">
+                            <span class="nav-icon">♙</span>
+                            <span>人員管理</span>
+                        </a>
 
-                <a href="{$baseUrl}/admin-invites/create" class="nav-link">
-                    <span class="nav-icon">✉</span>
-                    <span>管理員邀請碼</span>
-                </a>
+                        <a href="{$baseUrl}/admin-invites/create" class="nav-link">
+                            <span class="nav-icon">✉</span>
+                            <span>管理員邀請碼</span>
+                        </a>
+                    </div>
+                </div>
             {/if}
         </nav>
 
@@ -320,10 +342,73 @@ document.addEventListener('DOMContentLoaded', function () {
             String(isExpanded)
         );
     });
+    
+    const currentPath = window.location.pathname;
+
+    // 在案主列表、新增案主、修改案主、詳細資料頁面時，
+    // 自動展開「案主列表」下拉選單
+    if (
+        /\/clients(?:\/|$)/.test(currentPath)
+    ) {
+        const clientDropdown = document.querySelector(
+            '.nav-dropdown:has(a[href*="/clients"])'
+        );
+
+        if (clientDropdown) {
+            clientDropdown.classList.add('open');
+
+            const button = clientDropdown.querySelector(
+                '.nav-dropdown-toggle'
+            );
+
+            if (button) {
+                button.setAttribute('aria-expanded', 'true');
+            }
+        }
+    }
+
+    // 在人員管理、管理員邀請碼頁面時，
+    // 自動展開「人員列表」下拉選單
+    if (
+        /\/users(?:\/|$)/.test(currentPath) ||
+        /\/admin-invites(?:\/|$)/.test(currentPath)
+    ) {
+        const dropdowns = document.querySelectorAll('.nav-dropdown');
+
+        dropdowns.forEach(function (dropdown) {
+            if (
+                dropdown.querySelector('a[href*="/users"]') ||
+                dropdown.querySelector('a[href*="/admin-invites"]')
+            ) {
+                dropdown.classList.add('open');
+
+                const button = dropdown.querySelector(
+                    '.nav-dropdown-toggle'
+                );
+
+                if (button) {
+                    button.setAttribute('aria-expanded', 'true');
+                }
+            }
+        });
+    }
 });
+
+function toggleNavDropdown(button) {
+    const dropdown = button.closest('.nav-dropdown');
+
+    if (!dropdown) {
+        return;
+    }
+
+    dropdown.classList.toggle('open');
+
+    const isExpanded = dropdown.classList.contains('open');
+
+    button.setAttribute('aria-expanded', String(isExpanded));
+}
+
 </script>
 {/literal}
-
 </body>
 </html>
-```
