@@ -842,3 +842,8 @@
     width: 100%;
     box-sizing: border-box;
 }
+
+.nav-dropdown-menu span {
+    font-size: 14px;
+    text-indent: 2em;
+}
