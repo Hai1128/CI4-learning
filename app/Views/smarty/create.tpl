@@ -45,7 +45,7 @@
             <div class="nav-dropdown">
                 <button type="button" class="nav-link nav-dropdown-toggle"
                         aria-expanded="false" onclick="toggleNavDropdown(this)">
-                    <span class="nav-icon"></span>
+                    <span class="nav-icon">📋</span>
                     <span>案主專區</span>
                     <span class="nav-arrow">⌄</span>
                 </button>
@@ -53,6 +53,11 @@
                     <a href="{$baseUrl}/clients" class="nav-link">
                         <span class="nav-icon">▦</span>
                         <span>案主列表</span>
+                    </a>
+
+                    <a href="{$baseUrl}/clients/map" class="nav-link">
+                        <span class="nav-icon">⌖</span>
+                        <span>案主地圖</span>
                     </a>
 
                     {* admin 和 super_admin 才能新增案主 *}
@@ -70,7 +75,7 @@
                 <div class="nav-dropdown">
                     <button type="button" class="nav-link nav-dropdown-toggle"
                             aria-expanded="false" onclick="toggleNavDropdown(this)">
-                        <span class="nav-icon"></span>
+                        <span class="nav-icon">📋</span>
                         <span>人員專區</span>
                         <span class="nav-arrow">⌄</span>
                     </button>

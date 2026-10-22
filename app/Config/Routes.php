@@ -109,3 +109,9 @@ $routes->get('/users', 'User::index',
 ========================= */
 $routes->get('/smarty-test', 'SmartyTest::index', 
     ['filter' => ['auth']]);
+
+/* =========================
+    map顯示
+========================= */
+$routes->get('/clients/map', 'Client::map',
+    ['filter' => ['auth']]);

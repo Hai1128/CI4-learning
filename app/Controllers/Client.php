@@ -655,6 +655,40 @@
                 ->setHeader('Content-Disposition', 'inline') //不要強制下載，從瀏覽器直接顯示
                 ->setBody(file_get_contents($filePath));
         }
+        
+        public function map()
+        {
+            $clientModel = new \App\Models\ClientModel();
+
+            // 取得所有尚未刪除的案主資料
+            $clients = $clientModel
+                ->where('d_date', null)
+                ->select('s_num, ct_name, ct_addr, latitude, longitude')
+                ->findAll();
+
+            $data = [
+                'clients' => $clients,
+                'clientsJson' => json_encode(
+                    $clients,
+                    JSON_HEX_TAG
+                    | JSON_HEX_APOS
+                    | JSON_HEX_QUOT
+                    | JSON_HEX_AMP
+                ),
+                'baseUrl' => rtrim(base_url(), '/'),
+                'userRole' => session()->get('role'),
+                'username' => session()->get('username'),
+                'breadcrumbs' => [
+                    ['label' => '案主列表', 'url' => '/clients'],
+                    ['label' => '案主地圖', 'url' => '/clients/map'],
+                ],
+            ];
+
+            $smarty = new \App\Libraries\SmartyRenderer();
+
+            return $smarty->render('map.tpl', $data);
+        }
+
 
     }
 ?>
