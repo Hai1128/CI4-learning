@@ -11,6 +11,15 @@ $routes->get('/clients', 'Client::index',
     ['filter' => 'auth']);
 
 /* =========================
+   已刪除案主列表/復原
+========================= */
+$routes->get('/clients/deletelist', 'Client::deletelist',
+    ['filter' => ['auth']]);
+
+$routes->get('/clients/rollback/(:num)', 'Client::rollback/$1', 
+    ['filter' => ['auth','role:admin,super_admin']]);
+
+/* =========================
    顯示新增頁面、新增案主
 ========================= */
 $routes->get('/clients/add', 'Client::add', 

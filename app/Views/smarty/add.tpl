@@ -51,19 +51,24 @@
                 </button>
                 <div class="nav-dropdown-menu">
                     <a href="{$baseUrl}/clients" class="nav-link">
-                        <span class="nav-icon">▦</span>
+                        <span class="nav-icon">📇</span>
                         <span>案主列表</span>
                     </a>
 
+                    <a href="{$baseUrl}/clients/deletelist" class="nav-link">
+                        <span class="nav-icon">🗑️</span>
+                        <span>已刪除案主</span>
+                    </a>
+
                     <a href="{$baseUrl}/clients/map" class="nav-link">
-                        <span class="nav-icon">⌖</span>
+                        <span class="nav-icon">🗺️</span>
                         <span>案主地圖</span>
                     </a>
 
                     {* admin 和 super_admin 才能新增案主 *}
                     {if $userRole == 'admin' || $userRole == 'super_admin'}
                         <a href="{$baseUrl}/clients/add" class="nav-link active">
-                            <span class="nav-icon">＋</span>
+                            <span class="nav-icon">➕</span>
                             <span>新增案主</span>
                         </a>
                     {/if}
@@ -81,12 +86,12 @@
                     </button>
                     <div class="nav-dropdown-menu">
                         <a href="{$baseUrl}/users" class="nav-link">
-                            <span class="nav-icon">♙</span>
+                            <span class="nav-icon">🛡️</span>
                             <span>人員管理</span>
                         </a>
 
                         <a href="{$baseUrl}/admin-invites/create" class="nav-link">
-                            <span class="nav-icon">✉</span>
+                            <span class="nav-icon">🔑</span>
                             <span>管理員邀請碼</span>
                         </a>
                     </div>

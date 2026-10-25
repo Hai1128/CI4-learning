@@ -67,6 +67,49 @@
             return $smarty->render('list.tpl', $data);
         }
 
+        //已刪除案主列表
+        public function deletelist()
+        {
+            $clientModel = new ClientModel();
+
+            $clientModel->where('d_date !=', null);
+
+            $routeNo = $this->request->getGet('route_no');
+
+            if ($routeNo !== null && $routeNo !== '') {
+                $clientModel->where('route_no', $routeNo);
+            }
+            
+            $clientModel
+                ->orderBy('route_no', 'ASC')
+                ->orderBy('s_num', 'ASC');
+
+            $clients = $clientModel->findAll();
+
+            $data = [
+                'clients' => $clients,
+                'routeNo' => $routeNo,
+                'userRole' => session()->get('role'),
+                'username' => session()->get('username'),
+                'baseUrl' => rtrim(base_url(), '/'),
+
+                'breadcrumbs' => [
+                    [
+                        'label' => '案主列表',
+                        'url' => '/clients',
+                    ],
+                    [
+                        'label' => '已刪除案主',
+                        'url' => '/clients/deletelist',
+                    ],
+                ],
+            ];
+
+            $smarty = new SmartyRenderer();
+
+            return $smarty->render('deletelist.tpl', $data);
+        }
+
         //顯示新增頁面
         public function add()
         {
@@ -523,6 +566,20 @@
             ]; //設定刪除時間
 
             //更新指定案主
+            $clientModel->update($id, $data);
+
+            return redirect()->to('/clients');
+        }
+
+        //刪除復原
+        public function rollback($id)
+        {
+            $clientModel = new ClientModel();
+
+            $data = [
+                'd_date' => null
+            ];
+
             $clientModel->update($id, $data);
 
             return redirect()->to('/clients');
