@@ -29,6 +29,8 @@
             CI4重要的安全機制之一，告訴CI4哪些欄位允許透過Model寫入資料庫中
             而s_num是AUTO_INCREMENT主鍵，不需要自己新增
         */
+
+        protected $useSoftDeletes = false;
     }
 
 ?>

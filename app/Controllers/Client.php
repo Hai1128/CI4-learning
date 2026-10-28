@@ -8,6 +8,7 @@
         所以Controller要先告訴PHP：我要使用ClientModel
     */
     use App\Libraries\SmartyRenderer;
+    use App\Libraries\ActivityLogger;
 
     class Client extends BaseController
     {
@@ -258,10 +259,40 @@
             |--------------------------------------------------------------------------
             */
             $clientModel = new ClientModel();
+            $db = $clientModel->db;
 
-            $clientModel->insert($data);
+            $db->transBegin();
 
-            return redirect()->to('/clients');
+            //新增案主資料
+            $clientId = $clientModel->insert($data);
+
+            if ($clientId === false || $db->transStatus() === false) {
+                $db->transRollback();
+
+                return redirect()->back()
+                    ->with('error', '新增案主失敗。');
+            }
+
+            $logger = new ActivityLogger();
+
+            $logged = $logger->log(
+                'create',
+                (int) $clientId,
+                $data['ct_name']
+            );
+
+            if (!$logged || $db->transStatus() === false) {
+                $db->transRollback();
+
+                return redirect()->back()
+                    ->with('error', '新增操作紀錄失敗案主資料未儲存。');
+            }
+
+            $db->transCommit();
+
+            return redirect()->to('/clients')
+                ->with('message', '案主新增成功。');
+
         }
 
 
@@ -488,10 +519,40 @@
             |--------------------------------------------------------------------------
             */
 
-            //真正執行UPDATE的地方
-            $clientModel->update($id, $data);
+            $db = $clientModel->db;
 
-            return redirect()->to('/clients');
+            $db->transBegin();
+
+            //修改案主資料
+            $updated = $clientModel->update($id, $data);
+
+            if (!$updated || $db->transStatus() === false) {
+                $db->transRollback();
+
+                return redirect()->back()
+                    ->with('error', '修改案主失敗。');
+            }
+
+            //紀錄修改操作
+            $logger = new ActivityLogger();
+
+            $logged = $logger->log(
+                'update',
+                (int) $id,
+                $data['ct_name']
+            );
+
+            if (!$logged || $db->transStatus() === false) {
+                $db->transRollback();
+
+                return redirect()->back()
+                    ->with('error', '操作紀錄寫入失敗，案主修改未儲存。');
+            }
+
+            $db->transCommit();
+
+            return redirect()->to('/clients')
+                ->with('message', '案主修改成功。');
         }
 
         //刪除目前照片
@@ -561,14 +622,47 @@
         {
             $clientModel = new ClientModel();
 
-            $data = [
+            // 確認案主存在，且尚未被刪除
+            $client = $clientModel
+                ->where('s_num', $id)
+                ->where('d_date IS NULL', null, false)
+                ->first();
+
+            if (!$client) {
+                return redirect()->to('/clients')
+                    ->with('error', '找不到可刪除的案主。');
+            }
+
+            $db = db_connect();
+            $db->transBegin();
+
+            $updated = $clientModel->update($id, [
                 'd_date' => date('Y-m-d H:i:s')
-            ]; //設定刪除時間
+            ]);
 
-            //更新指定案主
-            $clientModel->update($id, $data);
+            $logger = new ActivityLogger();
 
-            return redirect()->to('/clients');
+            $logged = false;
+
+            if ($updated) {
+                $logged = $logger->log(
+                    'delete',
+                    (int) $id,
+                    $client['ct_name']
+                );
+            }
+
+            if (!$updated || !$logged || $db->transStatus() === false) {
+                $db->transRollback();
+
+                return redirect()->to('/clients')
+                    ->with('error', '刪除失敗，請稍後再試。');
+            }
+
+            $db->transCommit();
+
+            return redirect()->to('/clients')
+                ->with('message', '案主已刪除。');
         }
 
         //刪除復原
@@ -576,13 +670,47 @@
         {
             $clientModel = new ClientModel();
 
-            $data = [
+            // 確認案主存在，且目前已被軟刪除
+            $client = $clientModel
+                ->where('s_num', $id)
+                ->where('d_date IS NOT NULL', null, false)
+                ->first();
+
+            if (!$client) {
+                return redirect()->to('/clients/deletelist')
+                    ->with('error', '找不到可還原的案主。');
+            }
+
+            $db = db_connect();
+            $db->transBegin();
+
+            $updated = $clientModel->update($id, [
                 'd_date' => null
-            ];
+            ]);
 
-            $clientModel->update($id, $data);
+            $logger = new ActivityLogger();
 
-            return redirect()->to('/clients');
+            $logged = false;
+
+            if ($updated) {
+                $logged = $logger->log(
+                    'restore',
+                    (int) $id,
+                    $client['ct_name']
+                );
+            }
+
+            if (!$updated || !$logged || $db->transStatus() === false) {
+                $db->transRollback();
+
+                return redirect()->to('/clients/deletelist')
+                    ->with('error', '還原失敗，請稍後再試。');
+            }
+
+            $db->transCommit();
+
+            return redirect()->to('/clients/deletelist')
+                ->with('message', '案主已成功還原。');
         }
 
         //詳細資料
